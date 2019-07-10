@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RaymondYuSolution.EntityFrameworkCore;
 
 namespace RaymondYuSolution.Migrations
 {
     [DbContext(typeof(RaymondYuSolutionDbContext))]
-    partial class RaymondYuSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190710212710_CMS Table")]
+    partial class CMSTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1031,35 +1033,6 @@ namespace RaymondYuSolution.Migrations
                     b.HasIndex("TenantId", "NormalizedUserName");
 
                     b.ToTable("AbpUsers");
-                });
-
-            modelBuilder.Entity("RaymondYuSolution.CMS.Entity.CMSContent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("PageContent");
-
-                    b.Property<string>("PageName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CMSContents");
                 });
 
             modelBuilder.Entity("RaymondYuSolution.MultiTenancy.Tenant", b =>

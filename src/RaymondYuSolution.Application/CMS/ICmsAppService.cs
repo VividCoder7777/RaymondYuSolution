@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Abp.Application.Services;
+using RaymondYuSolution.CMS.Dto;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RaymondYuSolution.CMS
 {
-    interface ICmsAppService
+    public interface ICMSAppService : IApplicationService
     {
+        Task<CMSDto> GetCMSContent(int pageId);
+        Task<CMSDto> InsertOrUpdateCMSContent(CMSInsertOrUpdateDto cmsDto);
+        Task<ICollection<CMSDto>> GetAll();
     }
 }
