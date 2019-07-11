@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RaymondYuSolution.EntityFrameworkCore;
 
 namespace RaymondYuSolution.Migrations
 {
     [DbContext(typeof(RaymondYuSolutionDbContext))]
-    partial class RaymondYuSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190710213444_changed pageName")]
+    partial class changedpageName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1057,8 +1059,6 @@ namespace RaymondYuSolution.Migrations
 
                     b.Property<string>("PageName")
                         .IsRequired();
-
-                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 

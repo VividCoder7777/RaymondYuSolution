@@ -10,7 +10,7 @@ namespace RaymondYuSolution.CMS
     public interface ICMSAppService : IApplicationService
     {
         Task<CMSDto> GetCMSContent(int pageId);
-        Task<CMSDto> InsertOrUpdateCMSContent(CMSInsertOrUpdateDto cmsDto);
+        Task InsertOrUpdateCMSContent(CMSInsertOrUpdateDto cmsDto);
         Task<ICollection<CMSDto>> GetAll();
     }
 }
