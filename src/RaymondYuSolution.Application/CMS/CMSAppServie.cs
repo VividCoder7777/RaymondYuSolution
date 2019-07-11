@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.ObjectMapping;
 using Abp.UI;
+using Castle.Core.Logging;
 using RaymondYuSolution.CMS.Dto;
 using RaymondYuSolution.CMS.Entity;
 
@@ -15,11 +16,13 @@ namespace RaymondYuSolution.CMS
     {
         private readonly IRepository<CMSContent> _cmsRepository;
         private readonly IObjectMapper _objectMapper;
+        public ILogger Logger { get; set; }
 
         public CMSAppService(IRepository<CMSContent> cmsRepository, IObjectMapper objectMapper)
         {
             _cmsRepository = cmsRepository;
             _objectMapper = objectMapper;
+            Logger = NullLogger.Instance;
         }
 
         public async Task<ICollection<CMSDto>> GetAll()
@@ -47,6 +50,8 @@ namespace RaymondYuSolution.CMS
         public async Task InsertOrUpdateCMSContent(CMSInsertOrUpdateDto cmsDto)
         {
             var cms = _objectMapper.Map<CMSContent>(cmsDto);
+
+            Logger.Info($"The values are {cms.PageName} AND {cms.PageContent}");
 
             await _cmsRepository.InsertOrUpdateAsync(cms);
         }

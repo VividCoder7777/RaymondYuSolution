@@ -7,13 +7,12 @@ using System.Text;
 
 namespace RaymondYuSolution.CMS.Entity
 {
-    public class CMSContent : FullAuditedEntity<int>, IMustHaveTenant
+    public class CMSContent : FullAuditedEntity<int>
     {
         [Required]
         public string PageName { get; set; }
 
         public string PageContent { get; set; }
-
-        public int TenantId { get; set; }
+        
     }
 }

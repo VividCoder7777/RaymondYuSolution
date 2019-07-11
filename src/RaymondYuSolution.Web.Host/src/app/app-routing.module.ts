@@ -41,7 +41,7 @@ import { CmsComponent } from "./cms/cms.component";
             canActivate: [AppRouteGuard]
           },
           { path: "about", component: AboutComponent },
-          { path: "cms-products", component: CmsComponent },
+          { path: "cms-contents", component: CmsComponent },
           { path: "update-password", component: ChangePasswordComponent }
         ]
       }
