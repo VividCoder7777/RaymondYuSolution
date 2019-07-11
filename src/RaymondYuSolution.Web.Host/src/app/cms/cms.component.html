@@ -1,3 +1,10 @@
-<p>
-  cms works!
-</p>
+<section *ngIf="cmsDto" class="text-center">
+  <header>
+    <h3>{{ cmsDto.pageName }}</h3>
+  </header>
+  <div class="row">
+    <div class="col-12">
+      <p>{{ cmsDto.pageContent }}</p>
+    </div>
+  </div>
+</section>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import {
+  CMSServiceProxy,
+  CMSDto
+} from "@shared/service-proxies/service-proxies";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-cms",
@@ -6,9 +11,23 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./cms.component.css"]
 })
 export class CmsComponent implements OnInit {
-  constructor() {}
+  id: number;
+  cmsDto: CMSDto;
 
-  ngOnInit() {}
+  constructor(
+    private cmsService: CMSServiceProxy,
+    private route: ActivatedRoute
+  ) {}
+
+  async ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.id = +params["id"];
+
+      this.cmsService.getCMSContent(this.id).subscribe(result => {
+        this.cmsDto = result;
+      });
+    });
+  }
 }
 
 /*

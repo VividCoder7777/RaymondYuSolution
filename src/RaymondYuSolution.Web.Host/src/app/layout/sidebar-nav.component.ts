@@ -1,13 +1,17 @@
-import { Component, Injector, ViewEncapsulation } from "@angular/core";
+import { Component, Injector, ViewEncapsulation, OnInit } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import { MenuItem } from "@shared/layout/menu-item";
+import {
+  CMSServiceProxy,
+  CMSDto
+} from "@shared/service-proxies/service-proxies";
 
 @Component({
   templateUrl: "./sidebar-nav.component.html",
   selector: "sidebar-nav",
   encapsulation: ViewEncapsulation.None
 })
-export class SideBarNavComponent extends AppComponentBase {
+export class SideBarNavComponent extends AppComponentBase implements OnInit {
   menuItems: MenuItem[] = [
     new MenuItem(this.l("HomePage"), "", "home", "/app/home"),
 
@@ -20,7 +24,9 @@ export class SideBarNavComponent extends AppComponentBase {
     new MenuItem(this.l("Users"), "Pages.Users", "people", "/app/users"),
     new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/app/roles"),
     new MenuItem(this.l("About"), "", "info", "/app/about"),
-    new MenuItem(this.l("CMS"), "", "", "/app/cms-contents"),
+    new MenuItem(this.l("CMS"), "", "menu", "", [
+      new MenuItem(this.l("Access Content Here"), "", "", "")
+    ]),
 
     new MenuItem(this.l("MultiLevelMenu"), "", "menu", "", [
       new MenuItem("ASP.NET Boilerplate", "", "", "", [
@@ -80,15 +86,35 @@ export class SideBarNavComponent extends AppComponentBase {
     ])
   ];
 
-  constructor(injector: Injector) {
+  readonly CMS_MENU_INDEX = 5;
+  readonly CMS_BASE_ROUTE = "cms-content";
+
+  constructor(injector: Injector, private _cmsService: CMSServiceProxy) {
     super(injector);
+  }
+
+  ngOnInit(): void {
+    // get all the CMS Content
+    this._cmsService.getAll().subscribe(cmsDtos => {
+      // populate menu with each entry
+      for (let content of cmsDtos) {
+        let route = this.cmsGenerateRoute(content.id);
+
+        this.menuItems[this.CMS_MENU_INDEX].items.push(
+          new MenuItem(this.l(content.pageName), "", "", route)
+        );
+      }
+    });
+  }
+
+  cmsGenerateRoute(id: number): string {
+    return `${this.CMS_BASE_ROUTE}/${id}`;
   }
 
   showMenuItem(menuItem): boolean {
     if (menuItem.permissionName) {
       return this.permission.isGranted(menuItem.permissionName);
     }
-
     return true;
   }
 }
